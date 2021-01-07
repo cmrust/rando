@@ -6,7 +6,7 @@ A long ramble in the countryside, by foot or bicycle.
 
 This project is an exploration of modern Python solutions I'm curating for myself as a reference kit.
 
-At a high level, this is an implementation of an API server stack, a cli tool, some shared libraries between them and all of the common build processes that usually surround a project like that. The goal is to include everything necessary for spinning up new Python applications quickly, in a structured, maintainable, free (in every sense) and (at least as of now) modern fashion.
+At a high level, this is an implementation of an API server stack, a cli tool, some shared libraries between them and all of the common build processes that usually surround a project like that. The goal is to include everything necessary for spinning up new Python applications quickly, in a structured, maintainable, free (in every sense) and modern (at least as of now) fashion.
 
 Functionality is demoed using bicycle geometry and frame design concepts.
 
