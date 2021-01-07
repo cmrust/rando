@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ -d ".venv" ]]; then
+  source .venv/bin/activate
+else
+  echo "Initialize virtualenv before running, see Makefile for more details."
+  exit 1
+fi
+
+python rando-cli.py "$@"
