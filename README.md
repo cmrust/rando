@@ -39,20 +39,14 @@ git clone git@github.com:cmrust/rando.git && cd rando
 make venv-install
 ```
 
-### API server
+### Run the API server
 
 ```
 make run-dev-server
 ```
 
-### CLI
+### Run the CLI
 
 ```
 ./rando
 ```
-
-## Extra Thoughts
-
-### Notes on dependencies
-
-As of now, `pytest` only supports Python 3.6+.
