@@ -22,9 +22,14 @@ Functionality is demoed using bicycle geometry and frame design concepts.
 - modern python, supports type hints
 - autogeneration of shell autocompletion
 
+### Why pytest?
+
+- easy to use, run `pytest` and any tests named correctly will be run
+- easy to learn, uses builtin Python assert function, no new syntaxes
+
 ### Local shared packages
 
-Both the API server and CLI reference packages from `/shared/`.
+Both the API server and CLI reference packages from `src/shared/`.
 
 ## Setup Development Environment
 
