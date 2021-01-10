@@ -7,4 +7,4 @@ else
   exit 1
 fi
 
-python rando-cli.py "$@"
+cd src && python rando-cli.py "$@"

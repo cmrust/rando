@@ -50,3 +50,9 @@ make run-dev-server
 ```
 ./rando
 ```
+
+## Extra Thoughts
+
+### Notes on dependencies
+
+As of now, `pytest` only supports Python 3.6+.
