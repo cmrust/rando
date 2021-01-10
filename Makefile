@@ -33,4 +33,7 @@ venv-bash:
 	. $(VIRTUALENV_DIR)/bin/activate && exec bash
 
 run-dev-server:
-	. $(VIRTUALENV_DIR)/bin/activate && uvicorn rando-server:app --reload
+	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando-server:app --reload
+
+test:
+	. $(VIRTUALENV_DIR)/bin/activate && pytest
