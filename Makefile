@@ -36,4 +36,4 @@ run-dev-server:
 	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando-server:app --reload
 
 test:
-	. $(VIRTUALENV_DIR)/bin/activate && pytest
+	. $(VIRTUALENV_DIR)/bin/activate && pytest --cov=src/ tests/
