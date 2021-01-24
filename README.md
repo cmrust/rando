@@ -23,9 +23,12 @@ Functionality is demoed using bicycle geometry and frame design concepts.
 - autogeneration of shell autocompletion
 
 ### Why pytest?
-
 - easy to use, run `pytest` and any tests named correctly will be run
 - easy to learn, uses builtin Python assert function, no new syntaxes
+
+### Why GitHub Actions?
+
+There's no need for CD, or anything too fancy with regards to pipeline usage, in this project so far. Executing unit tests and running linters is enough for now and GitHub Actions is free and lives with the code removing any barriers to entry.
 
 ### Local shared packages
 
