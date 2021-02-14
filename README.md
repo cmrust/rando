@@ -34,6 +34,19 @@ There's no need for CD, or anything too fancy with regards to pipeline usage, in
 
 Both the API server and CLI reference packages from `src/shared/`.
 
+### How are dependencies organized?
+
+There are a number of `make` functions to make working with `pip` a bit easier.
+
+If you need to add dependencies, drop into a venv bash shell and use normal pip commands as usual:
+```
+make venv-bash
+pip install <package-name>
+# Ctrl^D to leave the venv shell
+# then write the new deps to the requirements.txt file
+make venv-freeze
+```
+
 ## Setup Development Environment
 
 ### Prerequisites
@@ -45,6 +58,34 @@ git clone git@github.com:cmrust/rando.git && cd rando
 
 # initialize the virtualenv and install dependencies
 make venv-install
+
+# install docker and setup a local postgres instance
+docker pull postgres
+# setup a local directory for postgres data:
+mkdir ${HOME}/postgres-data/
+# run the docker postgres instance
+docker run -d \
+    --name dev-postgres \
+    -e POSTGRES_PASSWORD=postgres \
+    -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    postgres
+
+
+psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create user admin'
+psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
+psql postgresql://postgres:postgres@localhost:5432/postgres -c "ALTER USER admin WITH PASSWORD 'password'"
+psql postgresql://postgres:postgres@localhost:5432/postgres -c 'grant all privileges on database rando to admin'
+```
+
+Connection string is then:
+```
+psql postgresql://admin:password@localhost:5432/rando
+```
+
+If you need to reset the database, then run this followed by the initialization commands above:
+```
+psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando'
 ```
 
 ### Run the API server

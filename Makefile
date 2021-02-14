@@ -35,5 +35,8 @@ venv-bash:
 run-dev-server:
 	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando-server:app --reload
 
+run-gino-dev-server:
+	. $(VIRTUALENV_DIR)/bin/activate && cd src && DB_DSN='postgresql://admin:password@localhost:5432/rando' uvicorn gino_fastapi_demo.asgi:app --reload
+
 test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest --cov=src/ tests/
