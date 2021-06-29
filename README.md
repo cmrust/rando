@@ -58,3 +58,8 @@ make run-dev-server
 ```
 ./rando
 ```
+
+
+### NEW ADDITIONS
+
+create .env file
