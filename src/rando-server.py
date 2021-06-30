@@ -1,11 +1,25 @@
 from fastapi import FastAPI
-from shared import bikecalc
 from models import db
+import views
+import pkgutil
 
-from views import users
+import logging
+logger = logging.getLogger("uvicorn.error")
+
+# TODO: Understand and come up with a strategy for unifying the various loggers.
+#logging.basicConfig(level=logging.INFO)
+# For example, adjusting log levels with basicConfig shows loggers from:
+#  gino.ext.starlette, uvicorn.error, gino.engine._SAEngine, etc..
 
 def load_modules(app=None):
-    users.init_app(app)
+    path = views.__path__
+    prefix = views.__name__ + "."
+    for importer, modname, ispkg in pkgutil.iter_modules(path, prefix):
+        module = importer.find_module(modname).load_module(modname)
+        init_app = getattr(module, "init_app", None)
+        if init_app:
+            init_app(app)
+            logger.info(f"Imported routes from {modname} module.")
 
 def load_app():
     app = FastAPI(title="Rando Server")
@@ -15,19 +29,8 @@ def load_app():
 
 app = load_app()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World2"}
-
 @app.get("/bicycles/{bicycle_id}")
 async def read_bicycle(bicycle_id: int):
     return {"bicycle_id": bicycle_id}
 
-
-@app.get("/calculate/gear_ratios")
-async def calculate_gear_ratios(min_chainring: int = 36, max_chainring: int = 50, min_cog: int = 14, max_cog: int = 28):
-    """Calculates a hierarchy of gear ratios from cogs to chainrings.
-
-    Default values are from my bike."""
-    return bikecalc.calculate_gear_ratios(min_chainring, max_chainring, min_cog, max_cog)
 
