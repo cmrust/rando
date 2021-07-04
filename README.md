@@ -30,21 +30,49 @@ Functionality is demoed using bicycle geometry and frame design concepts.
 
 There's no need for CD, or anything too fancy with regards to pipeline usage, in this project so far. Executing unit tests and running linters is enough for now and GitHub Actions is free and lives with the code removing any barriers to entry.
 
-### Local shared packages
-
-Both the API server and CLI reference packages from `src/shared/`.
-
 ## Setup Development Environment
 
 ### Prerequisites
 ```
 # install python3
 
+# install Docker Desktop
+
 # clone and cd into the project
 git clone git@github.com:cmrust/rando.git && cd rando
 
 # initialize the virtualenv and install dependencies
 make venv-install
+```
+
+### Setup Local Dev Database
+
+Run postgres Docker image and create database:
+
+```
+docker pull postgres
+
+# setup a local directory for postgres data
+mkdir ${HOME}/postgres-data/
+
+docker run -d \
+    --name dev-postgres \
+    -e POSTGRES_PASSWORD=postgres \
+    -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    postgres
+
+# Create admin user and rando database
+make init-dev-database
+```
+
+Create `.env` file in src folder:
+```
+echo 'DB_USER=admin
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE=rando' > src/.env
 ```
 
 ### Run the API server
@@ -59,7 +87,37 @@ make run-dev-server
 ./rando
 ```
 
+## Developer Notes
 
-### NEW ADDITIONS
+### Local shared packages
 
-create .env file
+Both the API server and CLI reference packages from `src/shared/`.
+
+### How are dependencies organized?
+
+There are a number of `make` functions to make working with `pip` a bit easier.
+
+If you need to add dependencies, drop into a venv bash shell and use normal pip commands as usual, then use the make command to freeze the venv:
+```
+make venv-bash
+pip install <package-name>
+# Ctrl^D to leave the venv shell
+# then write the new deps to the requirements.txt file with:
+make venv-freeze
+```
+
+### Manage DB migrations
+
+To instantiate alembic and run the first pass on our database:
+
+```
+# TODO: Make these better
+make venv-bash
+alembic init migrations
+# update migrations/env.py with db connection info
+# the following command will generate migration code: ./migrations/versions/*_initial_generation.py
+alembic revision --autogenerate -m 'initial generation'
+# then apply the changes
+alembic upgrade head
+```
+
