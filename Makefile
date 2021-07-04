@@ -33,7 +33,17 @@ venv-bash:
 	. $(VIRTUALENV_DIR)/bin/activate && exec bash
 
 run-dev-server:
-	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando-server:app --reload
+	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando_server:app --reload
+
+init-dev-database:
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create user admin'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c "ALTER USER admin WITH PASSWORD 'password'"
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'grant all privileges on database rando to admin'
+
+reset-dev-database:
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
 
 test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest --cov=src/ tests/
