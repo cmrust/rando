@@ -24,7 +24,9 @@ venv-python:
 
 # drops user into a Bash shell with venv activated
 venv-bash:
-	. $(VIRTUALENV_DIR)/bin/activate && exec bash
+	. $(VIRTUALENV_DIR)/bin/activate && \
+	export PYTHONDONTWRITEBYTECODE=1 && \
+	exec bash
 
 # runs local instance of app server
 # PYTHONDONTWRITEBYTECODE disables writing *.pyc files - unnecessary for local dev
