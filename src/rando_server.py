@@ -32,9 +32,3 @@ def load_app():
     return app
 
 app = load_app()
-
-@app.get("/bicycles/{bicycle_id}")
-async def read_bicycle(bicycle_id: int):
-    return {"bicycle_id": bicycle_id}
-
-
