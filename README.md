@@ -72,8 +72,12 @@ make run-dev-database
 # Creates admin user and rando database (only necessary once)
 make init-dev-database
 
+# Migrates database to latest revision
+make migrate-dev-database
+
 # If you need to drop/recreate the database later, run:
 # make reset-dev-database
+# make migrate-dev-database
 
 # If you need to shutdown the database later, run:
 # make stop-dev-database
