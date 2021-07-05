@@ -55,11 +55,12 @@ make venv-install
 
 ### Setup Local Dev Database
 
-Run postgres Docker image and create database:
+Start up and initialize the database:
 
 ```
 docker pull postgres
 
+# Launch database
 make run-dev-database
 
 # Creates admin user and rando database (only necessary once)
@@ -67,6 +68,9 @@ make init-dev-database
 
 # If you need to drop/recreate the database later, run:
 # make reset-dev-database
+
+# If you need to shutdown the database later, run:
+# make stop-dev-database
 ```
 
 Create `.env` file in src folder:
@@ -116,11 +120,15 @@ To instantiate alembic and run the first pass on our database:
 ```
 # TODO: Make these better
 make venv-bash
+cd src/
 alembic init migrations
 # update migrations/env.py with db connection info
 # the following command will generate migration code: ./migrations/versions/*_initial_generation.py
 alembic revision --autogenerate -m 'initial generation'
 # then apply the changes
 alembic upgrade head
+# ... make more code changes that require db changes
+alembic revision --autogenerate -m 'changed something'
+# then apply the changes
+alembic upgrade head
 ```
-

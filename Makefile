@@ -18,7 +18,7 @@ venv-clean:
 	rm -rf __pycache__
 
 # drops user into a Python REPL within virtualenv
-# note: for this and the bash function below; exec replaces parent pid with child pid
+# (note: for this and the bash function below, exec command replaces parent pid with child pid)
 venv-python:
 	exec $(VIRTUALENV_DIR)/bin/python
 
@@ -29,7 +29,7 @@ venv-bash:
 run-dev-server:
 	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando_server:app --reload
 
-# ensure local data directory exists before launching database container
+# ensures local data directory exists before launching database container
 run-dev-database:
 	test -d $${HOME}/postgres-data/ || mkdir $${HOME}/postgres-data/
 	docker run -d \
@@ -42,15 +42,18 @@ run-dev-database:
 stop-dev-database:
 	docker stop dev-postgres && docker rm dev-postgres
 
+# configures user and database for initial db setup
 init-dev-database:
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create user admin'
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c "ALTER USER admin WITH PASSWORD 'password'"
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'grant all privileges on database rando to admin'
 
+# drops and recreates database
 reset-dev-database:
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando'
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
 
+# runs unit tests
 test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest --cov=src/ tests/
