@@ -12,13 +12,13 @@ logger = logging.getLogger("uvicorn.error")
 #  gino.ext.starlette, uvicorn.error, gino.engine._SAEngine, etc..
 
 def load_modules(app=None):
-    # walk each module from views and import
+    # walk and import each module from views
     path = views.__path__
     prefix = views.__name__ + "."
     for importer, modname, ispkg in pkgutil.iter_modules(path, prefix):
         module = importer.find_module(modname).load_module(modname)
         # load individual routes from each view into FastAPI app
-        # skip this process when app is None during alembic runs
+        # skip this process when app is None (for example, during alembic runs)
         if app:
             init_app = getattr(module, "init_app", None)
             if init_app:
