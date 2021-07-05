@@ -63,7 +63,10 @@ reset-dev-database:
 
 # migrate dev database to head of alembic revisions
 migrate-dev-database:
-	. $(VIRTUALENV_DIR)/bin/activate && cd src && alembic upgrade head
+	export PYTHONDONTWRITEBYTECODE=1 && \
+	. $(VIRTUALENV_DIR)/bin/activate && \
+	cd src && \
+	alembic upgrade head
 
 # runs unit tests
 test:
