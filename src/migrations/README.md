@@ -6,4 +6,4 @@ cd src/
 alembic init migrations
 ```
 
-Then `migrations/env.py` was updated to load SQL Alchemy model code and db connection info.
+Then `migrations/env.py` was updated to load SQLAlchemy model code and db connection info.
