@@ -61,6 +61,10 @@ reset-dev-database:
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando'
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
 
+# migrate dev database to head of alembic revisions
+migrate-dev-database:
+	. $(VIRTUALENV_DIR)/bin/activate && cd src && alembic upgrade head
+
 # runs unit tests
 test:
 	. $(VIRTUALENV_DIR)/bin/activate && pytest --cov=src/ tests/
