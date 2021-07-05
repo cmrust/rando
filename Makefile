@@ -26,8 +26,13 @@ venv-python:
 venv-bash:
 	. $(VIRTUALENV_DIR)/bin/activate && exec bash
 
+# runs local instance of app server
+# PYTHONDONTWRITEBYTECODE disables writing *.pyc files - unnecessary for local dev
 run-dev-server:
-	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando_server:app --reload
+	export PYTHONDONTWRITEBYTECODE=1 && \
+	. $(VIRTUALENV_DIR)/bin/activate && \
+	cd src && \
+	uvicorn rando_server:app --reload
 
 # ensures local data directory exists before launching database container
 run-dev-database:
