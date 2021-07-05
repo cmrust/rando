@@ -1,5 +1,4 @@
 VIRTUALENV_DIR=.venv
-PIP_DEPS=fastapi uvicorn typer rich
 
 venv-init:
 	test -d $(VIRTUALENV_DIR) || python3 -m venv $(VIRTUALENV_DIR)
@@ -18,11 +17,6 @@ venv-clean:
 	rm -rf $(VIRTUALENV_DIR)
 	rm -rf __pycache__
 
-# reinstall all pip deps from higher-order dependencies (see list at top of file) and refresh (git-versioned) requirements.txt
-# note: appears to be no way to separate higher-level dependencies from the rest with requirements.txt
-venv-refresh-reqs: venv-clean venv-init
-	. $(VIRTUALENV_DIR)/bin/activate && pip3 install $(PIP_DEPS) && pip3 freeze > requirements.txt
-
 # drops user into a Python REPL within virtualenv
 # note: for this and the bash function below; exec replaces parent pid with child pid
 venv-python:
@@ -34,6 +28,19 @@ venv-bash:
 
 run-dev-server:
 	. $(VIRTUALENV_DIR)/bin/activate && cd src && uvicorn rando_server:app --reload
+
+# ensure local data directory exists before launching database container
+run-dev-database:
+	test -d $${HOME}/postgres-data/ || mkdir $${HOME}/postgres-data/
+	docker run -d \
+    	--name dev-postgres \
+    	-e POSTGRES_PASSWORD=postgres \
+    	-v $${HOME}/postgres-data/:/var/lib/postgresql/data \
+    	-p 5432:5432 \
+    	postgres
+
+stop-dev-database:
+	docker stop dev-postgres && docker rm dev-postgres
 
 init-dev-database:
 	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create user admin'
