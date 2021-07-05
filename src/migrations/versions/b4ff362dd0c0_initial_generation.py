@@ -1,8 +1,8 @@
-"""added bicycle class
+"""initial generation
 
-Revision ID: 451cd345c9b6
-Revises: e2d6573ec24c
-Create Date: 2021-07-04 20:35:19.208527
+Revision ID: b4ff362dd0c0
+Revises: 
+Create Date: 2021-07-05 14:55:26.796030
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '451cd345c9b6'
-down_revision = 'e2d6573ec24c'
+revision = 'b4ff362dd0c0'
+down_revision = None
 branch_labels = None
 depends_on = None
 
