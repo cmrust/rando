@@ -32,16 +32,24 @@ There's no need for CD, or anything too fancy with regards to pipeline usage, in
 
 ## Setup Development Environment
 
-### Prerequisites
+### Install Python 3
+
+Makefile functions expect `python3` and `pip3` in PATH.
+
+### Install Docker Desktop
+
+Instructions should be accessible on docker.com.
+
+### Install `psql` cli
+
+On Mac, this can be done with Homebrew.
+
+### Clone project and initialize deps
 ```
-# install python3
+git clone git@github.com:cmrust/rando.git
 
-# install Docker Desktop
+cd rando
 
-# clone and cd into the project
-git clone git@github.com:cmrust/rando.git && cd rando
-
-# initialize the virtualenv and install dependencies
 make venv-install
 ```
 
@@ -52,18 +60,13 @@ Run postgres Docker image and create database:
 ```
 docker pull postgres
 
-# setup a local directory for postgres data
-mkdir ${HOME}/postgres-data/
+make run-dev-database
 
-docker run -d \
-    --name dev-postgres \
-    -e POSTGRES_PASSWORD=postgres \
-    -v ${HOME}/postgres-data/:/var/lib/postgresql/data \
-    -p 5432:5432 \
-    postgres
-
-# Create admin user and rando database
+# Creates admin user and rando database (only necessary once)
 make init-dev-database
+
+# If you need to drop/recreate the database later, run:
+# make reset-dev-database
 ```
 
 Create `.env` file in src folder:
@@ -72,7 +75,7 @@ echo 'DB_USER=admin
 DB_PASSWORD=password
 DB_HOST=localhost
 DB_PORT=5432
-DB_DATABASE=rando' > src/.env
+DB_DATABASE=rando' > ./src/.env
 ```
 
 ### Run the API server
@@ -97,7 +100,7 @@ Both the API server and CLI reference packages from `src/shared/`.
 
 There are a number of `make` functions to make working with `pip` a bit easier.
 
-If you need to add dependencies, drop into a venv bash shell and use normal pip commands as usual, then use the make command to freeze the venv:
+If you need to add dependencies, drop into a virtual environment bash shell and use normal pip commands as usual, then use this make command to freeze the venv:
 ```
 make venv-bash
 pip install <package-name>
