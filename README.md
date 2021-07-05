@@ -59,7 +59,7 @@ cd rando
 make venv-install
 ```
 
-### Setup Local Dev Database
+### Setup local dev database
 
 Start up and initialize the database:
 
