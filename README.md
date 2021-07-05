@@ -26,6 +26,12 @@ Functionality is demoed using bicycle geometry and frame design concepts.
 - easy to use, run `pytest` and any tests named correctly will be run
 - easy to learn, uses builtin Python assert function, no new syntaxes
 
+### Why Gino?
+
+Gino implements an async ORM (Object-relational mapping) for PostgreSQL, built on top of SQLAlchemy, the most popular ORM for Python.
+
+SQLAlchemy comes with a large open source community providing excellent documentation and complex toolsets, such as Alembic for managing database migrations.
+
 ### Why GitHub Actions?
 
 There's no need for CD, or anything too fancy with regards to pipeline usage, in this project so far. Executing unit tests and running linters is enough for now and GitHub Actions is free and lives with the code removing any barriers to entry.
@@ -45,7 +51,7 @@ Instructions should be accessible on docker.com.
 On Mac, this can be done with Homebrew.
 
 ### Clone project and initialize deps
-```
+```bash
 git clone git@github.com:cmrust/rando.git
 
 cd rando
@@ -57,7 +63,7 @@ make venv-install
 
 Start up and initialize the database:
 
-```
+```bash
 docker pull postgres
 
 # Launch database
@@ -74,7 +80,7 @@ make init-dev-database
 ```
 
 Create `.env` file in src folder:
-```
+```bash
 echo 'DB_USER=admin
 DB_PASSWORD=password
 DB_HOST=localhost
@@ -84,13 +90,13 @@ DB_DATABASE=rando' > ./src/.env
 
 ### Run the API server
 
-```
+```bash
 make run-dev-server
 ```
 
 ### Run the CLI
 
-```
+```bash
 ./rando
 ```
 
@@ -100,12 +106,12 @@ make run-dev-server
 
 Both the API server and CLI reference packages from `src/shared/`.
 
-### How are dependencies organized?
+### Managing `pip` installations
 
 There are a number of `make` functions to make working with `pip` a bit easier.
 
-If you need to add dependencies, drop into a virtual environment bash shell and use normal pip commands as usual, then use this make command to freeze the venv:
-```
+For example, if you need to add dependencies just drop into a virtual environment bash shell and use normal pip commands per usual, before using this make command to freeze the venv:
+```bash
 make venv-bash
 pip install <package-name>
 # Ctrl^D to leave the venv shell
@@ -113,22 +119,30 @@ pip install <package-name>
 make venv-freeze
 ```
 
-### Manage DB migrations
+### Using Alembic
 
-To instantiate alembic and run the first pass on our database:
+Alembic is a tool that can be used with SQLAlchemy to automate complex database migration processes.
 
-```
-# TODO: Make these better
+Alembic code is kept in `src/alembic.ini` and `src/migrations/`.
+
+Note: Alembic uses the same `src/.env` database credentials as the application server.
+
+Common `alembic` commands are:
+```bash
+# To use the alembic cli, load virtual env shell and cd into place:
 make venv-bash
-cd src/
-alembic init migrations
-# update migrations/env.py with db connection info
-# the following command will generate migration code: ./migrations/versions/*_initial_generation.py
-alembic revision --autogenerate -m 'initial generation'
-# then apply the changes
-alembic upgrade head
-# ... make more code changes that require db changes
-alembic revision --autogenerate -m 'changed something'
-# then apply the changes
+cd ./src/
+
+# Show current revision for a database
+alembic current
+
+# After making new changes to SQL models in the application code, generate migration code:
+alembic revision --autogenerate -m 'useful comment goes here'
+# The above command would generate the following migration script: ./migrations/versions/<rev>_useful_comment_goes_here.py
+
+# List migration code revisions in order
+alembic history
+
+# Apply latest migration code to database
 alembic upgrade head
 ```
