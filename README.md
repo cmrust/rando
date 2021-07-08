@@ -112,9 +112,9 @@ Both the API server and CLI reference packages from `src/shared/`.
 
 ### Managing `pip` installations
 
-There are a number of `make` functions to make working with `pip` a bit easier.
+There are a number of `make` functions to make working with `pip` a bit easier. Check out the comments in the [Makefile](Makefile) for more information.
 
-For example, if you need to add dependencies just drop into a virtual environment bash shell and use normal pip commands per usual, before using this make command to freeze the venv:
+For example, if you need to add dependencies just drop into a virtual environment bash shell and use normal pip commands per usual, before using this make command to freeze the `requirements.txt` file:
 ```bash
 make venv-bash
 pip install <package-name>
