@@ -17,7 +17,7 @@ if TESTING:
     if DB_DATABASE:
         DB_DATABASE += "_test"
     else:
-        DB_DATABASE += "rando_test"
+        DB_DATABASE = "rando_test"
 
 DB_DSN = config(
     "DB_DSN",
