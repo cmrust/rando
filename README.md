@@ -150,3 +150,9 @@ alembic history
 # Apply latest migration code to database
 alembic upgrade head
 ```
+
+### Configuring pytest
+
+Leverage `make test` to run pytest.
+
+Code coverage is calculated with pytest using coverage.py and files can be excluded from coverage with [src/.coveragerc](src/.coveragerc).
