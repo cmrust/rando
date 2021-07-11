@@ -80,3 +80,9 @@ test:
 	. $(VIRTUALENV_DIR)/bin/activate && \
 	cd src && \
 	python -m pytest --cov=./ ../tests/
+
+# runs linter
+lint:
+	. $(VIRTUALENV_DIR)/bin/activate && \
+	cd src && \
+	flake8 --config ../tox.ini --count --statistics
