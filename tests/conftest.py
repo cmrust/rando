@@ -6,9 +6,10 @@ from starlette.testclient import TestClient
 # putting the app in testing mode, informs config.py to use a separate test database
 environ["TESTING"] = "TRUE"
 
+
 @pytest.fixture
 def client():
-    from src.rando_server import db, load_app
+    from src.rando_server import load_app
 
     # migrate database to head (latest revision)
     alembic(["--raiseerr", "upgrade", "head"])

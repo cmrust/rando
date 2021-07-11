@@ -12,4 +12,3 @@ db = Gino(
     retry_limit=config.DB_RETRY_LIMIT,
     retry_interval=config.DB_RETRY_INTERVAL,
 )
-

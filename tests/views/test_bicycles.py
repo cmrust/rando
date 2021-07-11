@@ -1,9 +1,10 @@
 import uuid
 
+
 def test_crud(client):
     # create
     # generate unique values for bicycle fields
-    year = uuid.uuid1().int % 10000 # get the 4 digit remainder of division by 10000, to mock 4 digit year
+    year = uuid.uuid1().int % 10000  # get the 4 digit remainder of division by 10000, to mock 4 digit year
     make = str(uuid.uuid4())
     model = str(uuid.uuid4())
     r = client.post("/bicycles", json=dict(year=year, make=make, model=model))

@@ -1,5 +1,6 @@
 from . import db
 
+
 class Bicycle(db.Model):
     __tablename__ = "bicycle"
 
@@ -7,5 +8,3 @@ class Bicycle(db.Model):
     year = db.Column(db.Integer())
     make = db.Column(db.Unicode())
     model = db.Column(db.Unicode())
-
-

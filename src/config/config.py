@@ -39,4 +39,3 @@ DB_SSL = config("DB_SSL", default=None)
 DB_USE_CONNECTION_FOR_REQUEST = config("DB_USE_CONNECTION_FOR_REQUEST", cast=bool, default=True)
 DB_RETRY_LIMIT = config("DB_RETRY_LIMIT", cast=int, default=1)
 DB_RETRY_INTERVAL = config("DB_RETRY_INTERVAL", cast=int, default=1)
-
