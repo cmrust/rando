@@ -19,6 +19,10 @@ venv-clean:
 	rm -rf $(VIRTUALENV_DIR)
 	rm -rf __pycache__
 
+# activates venv in the user's current shell
+venv-activate:
+	. $(VIRTUALENV_DIR)/bin/activate
+
 # drops user into a Python REPL within virtualenv
 # (note: for this and the bash function below, exec command replaces parent pid with child pid)
 venv-python:
