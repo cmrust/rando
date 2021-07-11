@@ -7,9 +7,10 @@ import logging
 logger = logging.getLogger("uvicorn.error")
 
 # TODO: Understand and come up with a strategy for unifying the various loggers.
-#logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 # For example, adjusting log levels with basicConfig shows loggers from:
 #  gino.ext.starlette, uvicorn.error, gino.engine._SAEngine, etc..
+
 
 def load_modules(app=None):
     # walk and import each module from views
@@ -25,10 +26,12 @@ def load_modules(app=None):
                 init_app(app)
                 logger.info(f"Imported routes from {modname} module.")
 
+
 def load_app():
     app = FastAPI(title="Rando Server")
     db.init_app(app)
     load_modules(app)
     return app
+
 
 app = load_app()

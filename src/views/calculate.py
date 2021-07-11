@@ -3,6 +3,7 @@ from shared import bikecalc
 
 router = APIRouter()
 
+
 @router.get("/calculate/gear_ratios")
 async def calculate_gear_ratios(
         min_chainring: int = 36,
@@ -14,6 +15,6 @@ async def calculate_gear_ratios(
     Default values are from my bike."""
     return bikecalc.calculate_gear_ratios(min_chainring, max_chainring, min_cog, max_cog)
 
+
 def init_app(app):
     app.include_router(router)
-
