@@ -6,7 +6,9 @@ venv-init:
 # first time setting up the project? run this one
 # initialize the venv and installs dependencies from requirements.txt
 venv-install: venv-init
-	. $(VIRTUALENV_DIR)/bin/activate && pip3 install -r requirements.txt
+	. $(VIRTUALENV_DIR)/bin/activate && \
+		pip3 install --upgrade pip && \
+		pip3 install -r requirements.txt
 
 # saves any local venv changes to requirements.txt file
 venv-freeze:
