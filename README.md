@@ -13,18 +13,12 @@ Functionality is demoed using bicycle geometry and frame design concepts.
 ## Details
 
 ### Why FastAPI?
-- modern python, uses asyncio (asgi) and type hints
-- appears to be performant (based on starlette)
-- auto-documentation with swagger (enriched with type hints)
+
+FastAPI is a modern web framework. Based on Starlette ASGI, asyncio support allows for building high performance IO-bound applications. Leverages type hints allowing for better IDE auto-completion and enriched auto-documentation with Swagger. Also, comes with a plethora of documentation and implementation examples.
 
 ### Why Typer?
-- similar implementation to FastAPI (same author)
-- modern python, supports type hints
-- autogeneration of shell autocompletion
 
-### Why pytest?
-- easy to use, run `pytest` and any tests named correctly will be run
-- easy to learn, uses builtin Python assert function, no new syntaxes
+Typer has a similar implementation to FastAPI, as it's from the same author. Also, supports modern Python features including type hints and comes with auto-generation for shell auto-completion.
 
 ### Why Gino?
 
@@ -32,9 +26,17 @@ Gino implements an async ORM (Object-relational mapping) for PostgreSQL, built o
 
 SQLAlchemy comes with a large open source community providing excellent documentation and complex toolsets, such as Alembic for managing database migrations.
 
+### Why pytest?
+
+It's easy to use. Simply run `pytest` and any tests named correctly will be run. It's also easy to learn, leveraging the builtin Python assert function; there are no new syntaxes.
+
+### Why flake8?
+
+In a cursory comparison of Python linters, flake8 seemed simple enough, easy to implement and without imposing too many strong opinions.
+
 ### Why GitHub Actions?
 
-There's no need for CD, or anything too fancy with regards to pipeline usage, in this project so far. Executing unit tests and running linters is enough for now and GitHub Actions is free and lives with the code removing any barriers to entry.
+There's no need for CD, or anything too fancy with regards to pipeline usage, in this project so far. Executing unit tests and running linters is enough for now and GitHub Actions is free and lives with the code, removing barriers to entry.
 
 ## Setup Development Environment
 
