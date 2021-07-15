@@ -1,6 +1,4 @@
-VIRTUALENV_DIR = .venv
-# sets DB_HOST to localhost if undefined
-DB_HOST ?= localhost
+VIRTUALENV_DIR=.venv
 
 venv-init:
 	test -d $(VIRTUALENV_DIR) || python3 -m venv $(VIRTUALENV_DIR)
@@ -55,19 +53,19 @@ stop-dev-database:
 
 # configures user and database for initial db setup
 init-dev-database:
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'create user admin'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c "ALTER USER admin WITH PASSWORD 'password'"
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'create database rando'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'grant all privileges on database rando to admin'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'create database rando_test'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'grant all privileges on database rando_test to admin'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create user admin'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c "ALTER USER admin WITH PASSWORD 'password'"
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'grant all privileges on database rando to admin'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando_test'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'grant all privileges on database rando_test to admin'
 
 # drops and recreates database
 reset-dev-database:
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'drop database rando'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'drop database rando_test'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'create database rando'
-	psql postgresql://postgres:postgres@$(DB_HOST):5432/postgres -c 'create database rando_test'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'drop database rando_test'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando'
+	psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rando_test'
 
 # migrate dev database to head of alembic revisions
 migrate-dev-database:
