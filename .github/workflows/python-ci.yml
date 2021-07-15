@@ -7,12 +7,32 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
+
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_USER: admin
+      DB_PASSWORD: password
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: rando
 
     steps:
     - uses: actions/checkout@v2
@@ -26,6 +46,10 @@ jobs:
     - name: Lint with flake8
       run: |
         make lint
+    - name: Configure database
+      run: |
+        make init-dev-database
+        make migrate-dev-database
     - name: Test with pytest
       run: |
         make test
