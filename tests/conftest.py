@@ -14,8 +14,9 @@ def client():
     # migrate database to head (latest revision)
     alembic(["--raiseerr", "upgrade", "head"])
 
+    # yield client until we're done with it
     with TestClient(load_app()) as client:
         yield client
 
-    # downgrade database to base (zero revisions)
+    # then downgrade database to base (zero revisions)
     alembic(["--raiseerr", "downgrade", "base"])
